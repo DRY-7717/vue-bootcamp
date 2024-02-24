@@ -9,11 +9,6 @@ const router = createRouter({
       component: () => import("../views/HomeView.vue"),
     },
     {
-      path: "/categories",
-      name: "categories",
-      component: () => import("../views/CategoriesView.vue"),
-    },
-    {
       path: "/login",
       name: "login",
       component: () => import("../views/LoginView.vue"),
@@ -24,8 +19,23 @@ const router = createRouter({
       component: () => import("../views/RegisterView.vue"),
     },
     {
-      path: "/detail/:12",
-      name: "detail",
+      path: "/categories",
+      name: "categories",
+      component: () => import("../views/CategoriesView.vue"),
+    },
+    {
+      path: "/pricing",
+      name: "pricing",
+      component: () => import("../views/PricingView.vue"),
+    },
+    {
+      path: "/success",
+      name: "success",
+      component: () => import("../views/SuccessView.vue"),
+    },
+    {
+      path: "/product/:id",
+      name: "product",
       component: () => import("../views/DetailView.vue"),
     },
     {
