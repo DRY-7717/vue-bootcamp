@@ -3,7 +3,7 @@
         <div class="overflow-hidden border border-gray-200 rounded-xl">
             <RouterLink :to="{ name: 'product', params: { id: 1 } }">
                 <div class="m-4 overflow-hidden rounded-xl">
-                    <img alt="Placeholder" class="block w-full h-auto" :src="`src/assets/img/${image}`" />
+                    <img alt="Placeholder" class="block w-full h-auto" :src="image" />
                 </div>
             </RouterLink>
 
@@ -11,11 +11,11 @@
                 <h1 class="text-lg">
                     <RouterLink :to="{ name: 'product', params: { id: 1 } }"
                         class="font-semibold text-black no-underline hover:underline">
-                        {{ title }}
+                        {{ name }}
                     </RouterLink>
                 </h1>
                 <span class="block text-sm font-light text-gray-500 no-underline">
-                    {{ title }}
+                    {{ name }}
                 </span>
             </header>
         </div>
@@ -24,8 +24,7 @@
 <script setup>
 import { RouterLink } from 'vue-router';
 defineProps({
-    title: String,
-    count: Number,
+    name: String,
     image: String
 })
 
