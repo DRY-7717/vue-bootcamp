@@ -1,46 +1,43 @@
 <template>
     <section id="gallery">
         <transition mode="out-in">
-            <img :key="defaultImage" :src="`../src/assets/img/${defaultImage}`" alt=""
-                class="w-full mt-6 rounded-2xl img-thumbnail">
+            <img :key="thumbnail" :src="thumbnail" alt="" class="w-full mt-6 rounded-2xl img-thumbnail">
         </transition>
         <div class="grid grid-cols-4 gap-4 mt-4">
 
-            <div class="overflow-hidden cursor-pointer  rounded-2xl"
-                :class="{ 'ring-2 ring-indigo-500': defaultImage == gallery.image }" v-for="gallery in galleries"
-                :key="gallery.id" @click="changeRing(gallery.image)">
-                <img :src="`../src/assets/img/${gallery.image}`" class="w-full" alt="">
+            <div class="overflow-hidden cursor-pointer  rounded-2xl "   v-for="gallery in galleries" :key="gallery.id" :class="{ 'ring-2 ring-indigo-500': thumbnail == gallery.url }" @click="changeImage(gallery.url)">
+                <img :src="gallery.url" class="w-full h-full object-cover object-center" alt="">
             </div>
-
+             
         </div>
     </section>
 </template>
 <script setup>
-import { ref } from 'vue';
+import { ref, onMounted } from 'vue';
+import axios from 'axios';
+import { useRoute } from 'vue-router';
 
-const defaultImage = ref('gallery-5.png')
-const galleries = ref([
-    {
-        'id': 1,
-        'image': 'gallery-2.png'
-    },
-    {
-        'id': 2,
-        'image': 'gallery-3.png'
-    },
-    {
-        'id': 3,
-        'image': 'gallery-4.png'
-    },
-    {
-        'id': 4,
-        'image': 'gallery-5.png'
-    },
-])
+const route = useRoute();
+const galleries = ref([])
+const thumbnail = ref("")
 
-const changeRing = (image) => {
-    defaultImage.value = image
+
+async function getItems() {
+    const response = await axios.get(`https://zullkit-backend.demo.belajarkoding.com/api/products?id=${route.params.id}`)
+    thumbnail.value = response.data.data.thumbnails
+    galleries.value = response.data.data.galleries
 }
+
+const changeImage = (image) => {
+    thumbnail.value = image
+}
+
+
+onMounted(() => {
+    getItems()
+})
+
+
 </script>
 <style scoped>
 .v-enter-active,
