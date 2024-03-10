@@ -4,6 +4,7 @@
         <div class="flex flex-wrap -mx-1 lg:-mx-4">
             <CategoriesCard v-for="category in categories" :key="category.id" :name="category.name"
                 :count="category.products_count" :thumbnails="category.thumbnails" :id="category.id" />
+            
         </div>
     </div>
 </template> 
@@ -16,7 +17,7 @@ const categories = ref([]);
 
 async function getCategories() {
     try {
-        const response = await axios.get('https://zullkit-backend.demo.belajarkoding.com/api/categories?show_product=1&limit=4')
+        const response = await axios.get('https://zullkit-backend.demo.belajarkoding.com/api/categories?limit=4')
         categories.value = response.data.data.data
     } catch (error) {
         console.log(error);

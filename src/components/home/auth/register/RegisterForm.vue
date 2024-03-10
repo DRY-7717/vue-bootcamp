@@ -14,7 +14,7 @@
         </div>
         <div class="mb-4">
             <label class="block mb-1" for="password">Password</label>
-            <input  placeholder="Type your password" id="password" type="password" name="password"
+            <input placeholder="Type your password" id="password" type="password" name="password"
                 class="block w-full py-3 mt-2 border border-gray-300 rounded-full shadow-sm px-7 focus:border-indigo-300 focus:outline-none focus:ring focus:ring-indigo-200 focus:ring-opacity-50 disabled:bg-gray-100"
                 v-model="form.password" />
         </div>
@@ -32,7 +32,11 @@
 </template>
 <script setup>
 import { reactive } from "vue";
-import axios from "axios";
+import { useauthStore } from '@/stores/auth';
+import { useRouter } from 'vue-router';
+
+const authStore = useauthStore()
+const router = useRouter()
 
 const form = reactive({
     'name': '',
@@ -42,9 +46,8 @@ const form = reactive({
 })
 async function register() {
     try {
-        const response = await axios.post("https://zullkit-backend.demo.belajarkoding.com/api/register", form)
-        localStorage.setItem('access_token', response.data.data.access_token)
-        localStorage.setItem('token_type', response.data.data.token_type)
+        await authStore.register(form)
+        router.push('/')
     } catch (error) {
         console.log(error);
     }

@@ -1,14 +1,17 @@
+import { createApp } from "vue";
+import { createPinia } from "pinia";
 
+import App from "./App.vue";
+import router from "./router";
+import { useauthStore } from "./stores/auth";
 
-import { createApp } from 'vue'
-import { createPinia } from 'pinia'
+(async () => {
+  const app = createApp(App);
+  app.use(createPinia());
 
-import App from './App.vue'
-import router from './router'
+  const auth = useauthStore();
+  await auth.getDataUser();
 
-const app = createApp(App)
-
-app.use(createPinia())
-app.use(router)
-
-app.mount('#app')
+  app.use(router);
+  app.mount("#app");
+})();
