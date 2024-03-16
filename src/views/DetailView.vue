@@ -1,4 +1,4 @@
-<template >
+<template>
     <div class="container p-2 mx-auto my-10 max-w-7xl">
         <div class="flex flex-row flex-wrap py-4">
             <main role="main" class="w-full px-4 pt-1 sm:w-2/3 md:w-2/3">
@@ -6,7 +6,7 @@
                     {{ product.name }}
                 </h1>
                 <p class="text-gray-500">{{ product.subtitle }}</p>
-                <Galleries  />
+                <Galleries />
                 <section class="" id="orders">
                     <h1 class="mt-8 mb-3 text-lg font-semibold">About</h1>
                     <div class="text-gray-500" v-html="product.description">
@@ -48,10 +48,19 @@
                                 </li>
                             </ul>
                         </div>
-                        <RouterLink :to="{ name: 'pricing' }"
-                            class="inline-flex items-center justify-center w-full px-8 py-3 text-base font-medium text-white bg-indigo-600 border border-transparent rounded-full hover:bg-indigo-700 md:py-2 md:text-md md:px-10 hover:shadow">
-                            Download Now
-                        </RouterLink>
+                       
+                        <template v-if="auth.user.data.subscription.length != 0">
+                            <a :href="product.file"
+                                class="inline-flex items-center justify-center w-full px-8 py-3 text-base font-medium text-white bg-indigo-600 border border-transparent rounded-full hover:bg-indigo-700 md:py-2 md:text-md md:px-10 hover:shadow">
+                                Download Now
+                            </a>
+                        </template>
+                        <template v-else>
+                            <RouterLink :to="{ name: 'pricing' }"
+                                class="inline-flex items-center justify-center w-full px-8 py-3 text-base font-medium text-white bg-indigo-600 border border-transparent rounded-full hover:bg-indigo-700 md:py-2 md:text-md md:px-10 hover:shadow">
+                                Subscribe
+                            </RouterLink>
+                        </template>
                     </div>
                 </div>
             </aside>
@@ -63,10 +72,15 @@ import Galleries from '@/components/home/detail/Galleries.vue'
 import axios from 'axios';
 import { ref, onMounted } from 'vue';
 import { RouterLink, useRoute } from 'vue-router';
+import { useauthStore } from '@/stores/auth';
 
 const route = useRoute()
 const product = ref({})
 let features = ref([])
+
+const auth = useauthStore()
+
+
 
 
 async function getProduct() {
@@ -83,6 +97,7 @@ async function getProduct() {
 
 onMounted(() => {
     getProduct()
+    console.log(auth.user);
 });
 
 

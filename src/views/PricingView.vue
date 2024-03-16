@@ -1,4 +1,4 @@
-<template >
+<template>
     <div class="relative overflow-hidden bg-white">
         <div class="mx-auto">
             <div class="flex flex-col items-center w-full sm:justify-center sm:pt-0">
@@ -47,10 +47,10 @@
 
                                     </li>
                                 </ul>
-                                <RouterLink :to="{ name: 'success' }"
+                                <button @click="checkout(2000)"
                                     class="inline-flex items-center justify-center w-full px-8 py-3 text-base font-medium text-black bg-gray-200 border border-transparent rounded-full hover:bg-gray-300 md:py-2 md:text-md md:px-10 hover:shadow">
                                     Checkout Now
-                                </RouterLink>
+                                </button>
                             </div>
                         </div>
                         <div>
@@ -107,10 +107,10 @@
 
                                     </li>
                                 </ul>
-                                <RouterLink :to="{ name: 'success' }"
+                                <button @click="checkout(9000)"
                                     class="inline-flex items-center justify-center w-full px-8 py-3 text-base font-medium text-white bg-indigo-600 border border-transparent rounded-full hover:bg-indigo-700 md:py-2 md:text-md md:px-10 hover:shadow">
                                     Checkout Now
-                                </RouterLink>
+                                </button>
                             </div>
                         </div>
                     </div>
@@ -145,7 +145,8 @@
                                     <circle cx="30" cy="30" r="30" fill="#1BA37A" />
                                     <path
                                         d="M30 33C33.866 33 37 29.866 37 26C37 22.134 33.866 19 30 19C26.134 19 23 22.134 23 26C23 29.866 26.134 33 30 33Z"
-                                        stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
+                                        stroke="white" stroke-width="2" stroke-linecap="round"
+                                        stroke-linejoin="round" />
                                     <path d="M26.21 31.89L25 41L30 38L35 41L33.79 31.88" stroke="white" stroke-width="2"
                                         stroke-linecap="round" stroke-linejoin="round" />
                                 </svg>
@@ -165,10 +166,12 @@
                                     <circle cx="30" cy="30" r="30" fill="#FF6D90" />
                                     <path
                                         d="M40 21H34C32.9391 21 31.9217 21.4214 31.1716 22.1716C30.4214 22.9217 30 23.9391 30 25V39C30 38.2044 30.3161 37.4413 30.8787 36.8787C31.4413 36.3161 32.2044 36 33 36H40V21Z"
-                                        stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
+                                        stroke="white" stroke-width="2" stroke-linecap="round"
+                                        stroke-linejoin="round" />
                                     <path
                                         d="M20 21H26C27.0609 21 28.0783 21.4214 28.8284 22.1716C29.5786 22.9217 30 23.9391 30 25V39C30 38.2044 29.6839 37.4413 29.1213 36.8787C28.5587 36.3161 27.7956 36 27 36H20V21Z"
-                                        stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
+                                        stroke="white" stroke-width="2" stroke-linecap="round"
+                                        stroke-linejoin="round" />
                                 </svg>
 
                                 <h3 class="inline-block ml-2 text-lg font-semibold">
@@ -187,6 +190,24 @@
     </div>
 </template>
 <script setup>
-import { RouterLink } from "vue-router";
+import axios from "axios";
+
+async function checkout(price) {
+    try {
+        const response = await axios.post('https://zullkit-backend.demo.belajarkoding.com/api/checkout', {
+            payment_total: price,
+            payment_status: "SUCCESS"
+        }, {
+            headers: {
+                Authorization: `${localStorage.getItem(
+                    "token_type"
+                )} ${localStorage.getItem("access_token")}`,
+            },
+        })
+        window.location.href = response.data.data.payment_url
+    } catch (error) {
+        console.log(error);
+    }
+}
+
 </script>
-<style scoped></style>
