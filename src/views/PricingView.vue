@@ -196,7 +196,7 @@ async function checkout(price) {
     try {
         const response = await axios.post('https://zullkit-backend.demo.belajarkoding.com/api/checkout', {
             payment_total: price,
-            payment_status: "SUCCESS"
+            payment_status: "PENDING"
         }, {
             headers: {
                 Authorization: `${localStorage.getItem(
