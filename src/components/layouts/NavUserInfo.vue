@@ -15,12 +15,12 @@ function toggleDropdown() {
     show.value = !show.value;
 }
 
-// function logout() {
-//     localStorage.clear("access_token");
-//     localStorage.clear("token_type");
 
-//     router.push("/login");
-// }
+function logout() {
+    localStorage.clear("access_token");
+    localStorage.clear("token_type");
+    router.push({ name: 'login' });
+}
 </script>
 
 <template>
@@ -41,8 +41,8 @@ function toggleDropdown() {
                 <span class="block text-sm text-gray-900 dark:text-white">
                     {{ user.name }}
                 </span>
-                <span
-                    class="block text-sm text-gray-500 truncate font-regular dark:text-gray-400">{{ user.email }}</span>
+                <span class="block text-sm text-gray-500 truncate font-regular dark:text-gray-400">{{ user.email
+                    }}</span>
             </div>
             <ul class="py-1" aria-labelledby="dropdown">
                 <li>
@@ -54,7 +54,7 @@ function toggleDropdown() {
                         class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 dark:hover:bg-gray-600 dark:text-gray-200 dark:hover:text-white">Settings</a>
                 </li>
                 <li>
-                    <a href=""
+                    <a href="" @click="logout"
                         class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 dark:hover:bg-gray-600 dark:text-gray-200 dark:hover:text-white">Sign
                         out</a>
                 </li>
