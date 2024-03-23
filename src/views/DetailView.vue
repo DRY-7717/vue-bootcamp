@@ -48,19 +48,20 @@
                                 </li>
                             </ul>
                         </div>
-                       
-                        <template v-if="auth.user.data.subscription.length != 0">
-                            <a :href="product.file"
+
+
+                        <div v-if="auth.user">
+                            <a :href="product.file" v-if="auth.user.data.subscription.length > 0"
                                 class="inline-flex items-center justify-center w-full px-8 py-3 text-base font-medium text-white bg-indigo-600 border border-transparent rounded-full hover:bg-indigo-700 md:py-2 md:text-md md:px-10 hover:shadow">
                                 Download Now
                             </a>
-                        </template>
-                        <template v-else>
-                            <RouterLink :to="{ name: 'pricing' }"
+                            <RouterLink :to="{ name: 'pricing' }" v-else
                                 class="inline-flex items-center justify-center w-full px-8 py-3 text-base font-medium text-white bg-indigo-600 border border-transparent rounded-full hover:bg-indigo-700 md:py-2 md:text-md md:px-10 hover:shadow">
                                 Subscribe
                             </RouterLink>
-                        </template>
+                        </div>
+
+
                     </div>
                 </div>
             </aside>
@@ -70,7 +71,7 @@
 <script setup>
 import Galleries from '@/components/home/detail/Galleries.vue'
 import axios from 'axios';
-import { ref, onMounted } from 'vue';
+import { ref, onMounted, computed } from 'vue';
 import { RouterLink, useRoute } from 'vue-router';
 import { useauthStore } from '@/stores/auth';
 
@@ -97,7 +98,6 @@ async function getProduct() {
 
 onMounted(() => {
     getProduct()
-    console.log(auth.user);
 });
 
 
